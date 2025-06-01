@@ -5,206 +5,397 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Couple Problem Matrix</title>
 <style>
-:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif}
-body{display:flex;flex-direction:column;align-items:center;padding:2rem}
-h1{font-size:1.5rem;font-weight:600;margin-bottom:0.5rem}
-.prompt-input{width:100%;max-width:420px;font-size:1rem;padding:0.5rem 0.75rem;margin-bottom:1.5rem;border:none;background:transparent;box-sizing:border-box}
-.prompt-input::placeholder{color:#777}
-.input-label {
-    display: block;
-    margin-bottom: 1rem;
+:root{
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
+    --main-spacing: 2rem;
+    --primary-color: #007bff;
+    --primary-hover: #0069d9;
+    --text-color: #2c3e50;
+    --border-color: #dee2e6;
+    --bg-color: #f8f9fa;
 }
-.matrix{display:grid;grid-template-columns:repeat(4,150px);grid-template-rows:repeat(4,150px);border:2px solid #000}
-.cell{border:2px solid #000;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1rem;padding:8px;box-sizing:border-box}
-.diag{position:relative;overflow:hidden}
-.diag::before{content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent 49%,#000 49%,#000 51%,transparent 51%);pointer-events:none}
-.diag-text{position:absolute;width:65%;font-size:0.9rem;line-height:1.2;padding:6px}
+
+body{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:var(--main-spacing);
+    max-width:1200px;
+    margin:0 auto;
+    min-height:100vh;
+    background:var(--bg-color);
+    color:var(--text-color);
+}
+
+.heading-text {
+    text-align:center;
+    font-weight:600;
+    margin:0 0 1.5rem;
+}
+
+h1{
+    font-size:2rem;
+    margin-bottom:10rem;
+}
+
+h2 {
+    font-size:1.5rem;
+    margin-top:0;
+}
+
+.prompt-input{
+    width:140%;
+    max-width:1000px;
+    font-size:1.2rem;
+    padding:1rem 1.25rem;
+    margin:-1rem -20% 3rem;
+    margin-top:5rem;
+    border:1px solid var(--border-color);
+    border-radius:8px;
+    background:#fff;
+    box-sizing:border-box;
+    display:block;
+    box-shadow:0 2px 4px rgba(0,0,0,0.05);
+}
+
+.prompt-input::placeholder{
+    color:#777;
+}
+
+.matrix{
+    display:grid;
+    grid-template-columns:repeat(4,150px);
+    grid-template-rows:repeat(4,150px);
+    border:2px solid #000;
+    margin:1rem 0 2rem;
+    background:#fff;
+    box-shadow:0 4px 6px rgba(0,0,0,0.1);
+}
+
+.cell{
+    border:2px solid #000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:1rem;
+    padding:8px;
+    box-sizing:border-box;
+}
+
+.header-cell {
+    background:#fafafa;
+    font-weight:600;
+    font-size:1.1rem;
+}
+
+.diag{
+    position:relative;
+    overflow:hidden;
+}
+
+.diag::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(45deg,transparent 49%,#000 49%,#000 51%,transparent 51%);
+    pointer-events:none;
+}
+
+.diag-text{
+    position:absolute;
+    width:65%;
+    font-size:1rem;
+    line-height:1.2;
+    padding:6px;
+    font-weight:600;
+}
+
 .top-right{top:0;right:0;text-align:right}
 .bottom-left{bottom:0;left:0;text-align:left}
-.col-header,.row-header{background:#fafafa;font-weight:600;font-size:1.1rem}
-.blank-area{grid-column:2/span 3;grid-row:2/span 3;position:relative;border:2px solid #000}
+
+.blank-area{
+    grid-column:2/span 3;
+    grid-row:2/span 3;
+    position:relative;
+    border:2px solid #000;
+}
+
+.blank-area::before, .blank-area::after {
+    content:"";
+    position:absolute;
+    background:none;
+    border-style:dotted;
+    border-color:#000;
+    border-width:2px;
+}
+
 .blank-area::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    border-top: 2px dotted #000;
+    top:50%;
+    left:0;
+    right:0;
+    border-top-style:dotted;
 }
+
 .blank-area::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    border-left: 2px dotted #000;
+    left:50%;
+    top:0;
+    bottom:0;
+    border-left-style:dotted;
 }
-.pin{position:absolute;width:18px;height:18px;border-radius:50%;background:rgb(219, 21, 21);border:2px solid #fff;box-shadow:0 0 2px #000;transform:translate(-50%,-50%);pointer-events:none}
-.step{display:none}
-.step.active{display:block}
-.party-container{display:flex;gap:2rem;margin-bottom:1rem}
-.party h3{margin-top:0;text-align:center}
-button{margin-top:1rem;padding:0.5rem 1.25rem;font-size:1rem;cursor:pointer}
+
+.pin{
+    position:absolute;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    border:2px solid #fff;
+    box-shadow:0 0 2px #000;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+}
+
+.step{
+    display:none;
+    width:100%;
+}
+
+.step.active{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:80vh;
+}
+
+#step1{
+    margin-top:-10vh;
+}
+
+.problem-text {
+    text-align:center;
+    margin:0 0 1rem;
+    font-style:italic;
+    color:#666;
+}
+
 .button-container {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
+    display:flex;
+    gap:1.5rem;
+    justify-content:center;
+    margin-top:2rem;
 }
+
+.btn {
+    padding:0.75rem 2rem;
+    font-size:1.1rem;
+    cursor:pointer;
+    border-radius:6px;
+    transition:all 0.2s ease;
+}
+
 .back-button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    background-color:var(--bg-color);
+    border:1px solid var(--border-color);
+    color:#495057;
 }
+
 .next-button {
-    background-color: #007bff;
-    color: white;
-    border: 1px solid #0056b3;
+    background-color:var(--primary-color);
+    color:white;
+    border:1px solid #0056b3;
+}
+
+.back-button:hover {
+    background-color:#e9ecef;
+}
+
+.next-button:hover {
+    background-color:var(--primary-hover);
+}
+
+.final-text {
+    text-align:center;
+    font-weight:bold;
+    margin:1.5rem 0;
+    font-size:1.5rem;
 }
 </style>
 </head>
 <body>
 <div class="step active" id="step1">
-<h1>Let's hear what the problem is.</h1>
-<label for="statement" class="input-label">What has he/she done or said?</label>
-<input id="statement" class="prompt-input" type="text" placeholder="Type here…"><br>
-<div class="button-container">
-    <button id="toStep2" class="next-button">Next</button>
+    <h1 class="heading-text">Let's hear what the problem is.</h1>
+    <input id="statement" class="prompt-input" type="text" placeholder="Type here... What has he/she done or said?"><br>
+    <div class="button-container">
+        <button id="toStep2" class="btn next-button">Next</button>
+    </div>
 </div>
-</div>
+
+<template id="matrixTemplate">
+    <div class="cell diag" style="grid-column:1;grid-row:1;">
+        <span class="diag-text top-right">What is the intention?</span>
+        <span class="diag-text bottom-left">What do you think he/she feels?</span>
+    </div>
+    <div class="cell header-cell" style="grid-column:2;grid-row:1;">un-intentional</div>
+    <div class="cell header-cell" style="grid-column:3;grid-row:1;">intentional</div>
+    <div class="cell header-cell" style="grid-column:4;grid-row:1;">ill-intentional</div>
+    <div class="cell header-cell" style="grid-column:1;grid-row:2;">bothered</div>
+    <div class="cell header-cell" style="grid-column:1;grid-row:3;">not mind</div>
+    <div class="cell header-cell" style="grid-column:1;grid-row:4;">Enjoy it!</div>
+</template>
+
 <div class="step" id="step2">
-<h2 style="text-align:center;margin-top:0;">Partner A, please drop your pin.</h2>
-<p id="problemStatement2" style="text-align:center;margin:0 0 1rem;font-style:italic;color:#666"></p>
-<div class="matrix">
-<div class="cell diag" style="grid-column:1;grid-row:1;">
-<span class="diag-text top-right">What is the intention?</span>
-<span class="diag-text bottom-left">What do you think he/she feels?</span>
-</div>
-<div class="cell col-header" style="grid-column:2;grid-row:1;">un-intentional</div>
-<div class="cell col-header" style="grid-column:3;grid-row:1;">intentional</div>
-<div class="cell col-header" style="grid-column:4;grid-row:1;">ill-intentional</div>
-<div class="cell row-header" style="grid-column:1;grid-row:2;">bothered</div>
-<div class="cell row-header" style="grid-column:1;grid-row:3;">not mind</div>
-<div class="cell row-header" style="grid-column:1;grid-row:4;">Enjoy it!</div>
-<div id="blankA" class="blank-area"></div>
-</div>
-<div class="button-container">
-    <button id="backToStep1" class="back-button">← Back</button>
-    <button id="toStep2B" class="next-button">Next</button>
-</div>
+    <h2 class="heading-text">Partner A, please drop your pin.</h2>
+    <p id="problemStatement2" class="problem-text"></p>
+    <div class="matrix">
+        <div id="blankA" class="blank-area"></div>
+    </div>
+    <div class="button-container">
+        <button id="backToStep1" class="btn back-button">← Back</button>
+        <button id="toStep2B" class="btn next-button">Next</button>
+    </div>
 </div>
 
 <div class="step" id="step2B">
-<h2 style="text-align:center;margin-top:0;">Partner B, please drop your pin.</h2>
-<p id="problemStatement2B" style="text-align:center;margin:0 0 1rem;font-style:italic;color:#666"></p>
-<div class="matrix">
-<div class="cell diag" style="grid-column:1;grid-row:1;">
-<span class="diag-text top-right">What is the intention?</span>
-<span class="diag-text bottom-left">What do you think he/she feels?</span>
-</div>
-<div class="cell col-header" style="grid-column:2;grid-row:1;">un-intentional</div>
-<div class="cell col-header" style="grid-column:3;grid-row:1;">intentional</div>
-<div class="cell col-header" style="grid-column:4;grid-row:1;">ill-intentional</div>
-<div class="cell row-header" style="grid-column:1;grid-row:2;">bothered</div>
-<div class="cell row-header" style="grid-column:1;grid-row:3;">not mind</div>
-<div class="cell row-header" style="grid-column:1;grid-row:4;">Enjoy it!</div>
-<div id="blankB" class="blank-area"></div>
-</div>
-<div class="button-container">
-    <button id="backToStep2" class="back-button">← Back</button>
-    <button id="toStep3" class="next-button">Show Combined</button>
-</div>
+    <h2 class="heading-text">Partner B, please drop your pin.</h2>
+    <p id="problemStatement2B" class="problem-text"></p>
+    <div class="matrix">
+        <div id="blankB" class="blank-area"></div>
+    </div>
+    <div class="button-container">
+        <button id="backToStep2" class="btn back-button">← Back</button>
+        <button id="toStep3" class="btn next-button">Show Combined</button>
+    </div>
 </div>
 
 <div class="step" id="step3">
-<h2 style="text-align:center;margin-top:0;">Combined View</h2>
-<p id="problemStatement3" style="text-align:center;margin:0 0 1rem;font-style:italic;color:#666"></p>
-<div class="matrix">
-<div class="cell diag" style="grid-column:1;grid-row:1;">
-<span class="diag-text top-right">What is the intention?</span>
-<span class="diag-text bottom-left">What do you think he/she feels?</span>
+    <h2 class="heading-text">Combined View</h2>
+    <p id="problemStatement3" class="problem-text"></p>
+    <div class="matrix">
+        <div id="blankCombined" class="blank-area"></div>
+    </div>
+    <p class="problem-text">Red = Partner A, Blue = Partner B</p>
+    <p class="final-text">Now you can discuss.</p>
+    <div class="button-container">
+        <button id="backToStep2B" class="btn back-button">← Back</button>
+        <button id="startOver" class="btn next-button">Do it again</button>
+    </div>
 </div>
-<div class="cell col-header" style="grid-column:2;grid-row:1;">un-intentional</div>
-<div class="cell col-header" style="grid-column:3;grid-row:1;">intentional</div>
-<div class="cell col-header" style="grid-column:4;grid-row:1;">ill-intentional</div>
-<div class="cell row-header" style="grid-column:1;grid-row:2;">bothered</div>
-<div class="cell row-header" style="grid-column:1;grid-row:3;">not mind</div>
-<div class="cell row-header" style="grid-column:1;grid-row:4;">Enjoy it!</div>
-<div id="blankCombined" class="blank-area"></div>
-</div>
-<p style="text-align:center;margin-top:1rem;">Red = Partner A, Blue = Partner B</p>
-<div class="button-container">
-    <button id="backToStep2B" class="back-button">← Back</button>
-    <button id="startOver" class="next-button">Do it again</button>
-</div>
-</div>
+
 <script>
-const step1=document.getElementById('step1');
-const step2=document.getElementById('step2');
-const step2B=document.getElementById('step2B');
-const step3=document.getElementById('step3');
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const step2B = document.getElementById('step2B');
+const step3 = document.getElementById('step3');
 const statementInput = document.getElementById('statement');
 const problemStatement2 = document.getElementById('problemStatement2');
 const problemStatement2B = document.getElementById('problemStatement2B');
 const problemStatement3 = document.getElementById('problemStatement3');
+const matrixTemplate = document.getElementById('matrixTemplate');
 
-document.getElementById('toStep2').addEventListener('click',()=>{
+// Initialize matrices
+const matrices = document.querySelectorAll('.matrix');
+matrices.forEach(matrix => {
+    matrix.insertBefore(matrixTemplate.content.cloneNode(true), matrix.firstChild);
+});
+
+function switchToStep(from, to) {
+    from.classList.remove('active');
+    to.classList.add('active');
+}
+
+function updateProblemStatement(element) {
     const problem = statementInput.value.trim();
     if (problem) {
-        problemStatement2.textContent = `Problem: "${problem}"`;
+        element.textContent = `Problem: "${problem}"`;
     }
-    step1.classList.remove('active');
-    step2.classList.add('active');
+}
+
+document.getElementById('toStep2').addEventListener('click', () => {
+    if (statementInput.value.trim()) {
+        updateProblemStatement(problemStatement2);
+        switchToStep(step1, step2);
+    }
 });
 
-document.getElementById('backToStep1').addEventListener('click',()=>{
-    step2.classList.remove('active');
-    step1.classList.add('active');
+document.getElementById('backToStep1').addEventListener('click', () => {
+    switchToStep(step2, step1);
 });
 
-document.getElementById('toStep2B').addEventListener('click',()=>{
-    if(positions.A) {
-        const problem = statementInput.value.trim();
-        if (problem) {
-            problemStatement2B.textContent = `Problem: "${problem}"`;
-        }
-        step2.classList.remove('active');
-        step2B.classList.add('active');
+document.getElementById('toStep2B').addEventListener('click', () => {
+    if (positions.A) {
+        updateProblemStatement(problemStatement2B);
+        switchToStep(step2, step2B);
     } else {
         alert('Partner A needs to drop a pin first');
     }
 });
 
-document.getElementById('backToStep2').addEventListener('click',()=>{
-    step2B.classList.remove('active');
-    step2.classList.add('active');
+document.getElementById('backToStep2').addEventListener('click', () => {
+    switchToStep(step2B, step2);
 });
 
-document.getElementById('toStep3').addEventListener('click',()=>{
-    if(positions.B) {
-        const problem = statementInput.value.trim();
-        if (problem) {
-            problemStatement3.textContent = `Problem: "${problem}"`;
-        }
+document.getElementById('toStep3').addEventListener('click', () => {
+    if (positions.B) {
+        updateProblemStatement(problemStatement3);
         drawCombinedPins();
-        step2B.classList.remove('active');
-        step3.classList.add('active');
+        switchToStep(step2B, step3);
     } else {
         alert('Partner B needs to drop a pin first');
     }
 });
 
-document.getElementById('backToStep2B').addEventListener('click',()=>{
-    step3.classList.remove('active');
-    step2B.classList.add('active');
+document.getElementById('backToStep2B').addEventListener('click', () => {
+    switchToStep(step3, step2B);
 });
 
 document.getElementById('startOver').addEventListener('click', () => {
     window.location.reload();
 });
 
-const positions={};
-function enablePin(blankId,who,color){const blank=document.getElementById(blankId);let pinEl=null;blank.addEventListener('click',e=>{const rect=blank.getBoundingClientRect();const x=e.clientX-rect.left;const y=e.clientY-rect.top;positions[who]={x,y};if(!pinEl){pinEl=document.createElement('div');pinEl.className='pin';pinEl.style.background=color;blank.appendChild(pinEl);}pinEl.style.left=x+'px';pinEl.style.top=y+'px';});}
-enablePin('blankA','A','red');enablePin('blankB','B','blue');
-function drawCombinedPins(){const blank=document.getElementById('blankCombined');blank.innerHTML='';['A','B'].forEach(k=>{const pos=positions[k];if(pos){const pin=document.createElement('div');pin.className='pin';pin.style.background=k==='A'?'red':'blue';pin.style.left=pos.x+'px';pin.style.top=pos.y+'px';blank.appendChild(pin);}});}
+const positions = {};
+
+function enablePin(blankId, who, color) {
+    const blank = document.getElementById(blankId);
+    let pinEl = null;
+    
+    blank.addEventListener('click', e => {
+        const rect = blank.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        positions[who] = {x, y};
+        
+        if (!pinEl) {
+            pinEl = document.createElement('div');
+            pinEl.className = 'pin';
+            pinEl.style.background = color;
+            blank.appendChild(pinEl);
+        }
+        pinEl.style.left = x + 'px';
+        pinEl.style.top = y + 'px';
+    });
+}
+
+function drawCombinedPins() {
+    const blank = document.getElementById('blankCombined');
+    blank.innerHTML = '';
+    
+    ['A', 'B'].forEach(k => {
+        const pos = positions[k];
+        if (pos) {
+            const pin = document.createElement('div');
+            pin.className = 'pin';
+            pin.style.background = k === 'A' ? 'red' : 'blue';
+            pin.style.left = pos.x + 'px';
+            pin.style.top = pos.y + 'px';
+            blank.appendChild(pin);
+        }
+    });
+}
+
+enablePin('blankA', 'A', 'red');
+enablePin('blankB', 'B', 'blue');
 </script>
 </body>
 </html>

@@ -3,11 +3,11 @@ import SwiftUI
 struct ContentView: View {
     @State private var currentStep = 1
     @State private var problemStatement = ""
-    @State private var partnerAPosition: CGPoint?
-    @State private var partnerBPosition: CGPoint?
+    @State private var partnerAPin: CGPoint?
+    @State private var partnerBPin: CGPoint?
     
     var body: some View {
-        VStack {
+        Group {
             switch currentStep {
             case 1:
                 StepOneView(
@@ -16,29 +16,22 @@ struct ContentView: View {
                 )
             case 2:
                 StepTwoView(
-                    problemStatement: problemStatement,
-                    position: $partnerAPosition,
-                    onBack: { currentStep = 1 },
-                    onNext: { currentStep = 3 }
+                    problemStatement: $problemStatement,
+                    selectedPin: $partnerAPin,
+                    onNext: { currentStep = 3 },
+                    onBack: { currentStep = 1 }
                 )
             case 3:
                 StepThreeView(
-                    problemStatement: problemStatement,
-                    position: $partnerBPosition,
+                    problemStatement: $problemStatement,
+                    partnerAPin: $partnerAPin,
+                    partnerBPin: $partnerBPin,
                     onBack: { currentStep = 2 },
-                    onNext: { currentStep = 4 }
-                )
-            case 4:
-                CombinedView(
-                    problemStatement: problemStatement,
-                    partnerAPosition: partnerAPosition,
-                    partnerBPosition: partnerBPosition,
-                    onBack: { currentStep = 3 },
-                    onRestart: {
+                    onReset: {
                         currentStep = 1
                         problemStatement = ""
-                        partnerAPosition = nil
-                        partnerBPosition = nil
+                        partnerAPin = nil
+                        partnerBPin = nil
                     }
                 )
             default:
