@@ -1,10 +1,10 @@
-# Couple Matrix
+# Couple Couple
 
-A relationship visualization tool that helps couples understand their emotional perspectives on relationship issues. Available in both web and iOS versions.
+This is a game theory-based tool for collective decision making. Available in both web and iOS versions.
 
 ## Overview
 
-The Couple Matrix is an interactive tool that helps couples:
+Couple Couple is an interactive tool that helps partners (any kind):
 1. Articulate relationship issues
 2. Visualize emotional responses
 3. Compare perspectives
