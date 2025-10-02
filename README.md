@@ -1,10 +1,10 @@
-# Couple Couple
+# Compass
 
 This is a game theory-based tool for collective decision making. Available in both web and iOS versions.
 
 ## Overview
 
-Couple Couple is an interactive tool that helps partners (any kind):
+Compass is an interactive tool that helps partners (any kind):
 1. Articulate relationship issues
 2. Visualize emotional responses
 3. Compare perspectives
