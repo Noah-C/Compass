@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CoupleMatrixApp: App {
+struct CompassApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
