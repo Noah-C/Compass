@@ -18,15 +18,24 @@ struct ContentView: View {
                 StepTwoView(
                     problemStatement: $problemStatement,
                     selectedPin: $partnerAPin,
+                    partnerLabel: "Partner A",
                     onNext: { currentStep = 3 },
                     onBack: { currentStep = 1 }
                 )
             case 3:
+                StepTwoView(
+                    problemStatement: $problemStatement,
+                    selectedPin: $partnerBPin,
+                    partnerLabel: "Partner B",
+                    onNext: { currentStep = 4 },
+                    onBack: { currentStep = 2 }
+                )
+            case 4:
                 StepThreeView(
                     problemStatement: $problemStatement,
                     partnerAPin: $partnerAPin,
                     partnerBPin: $partnerBPin,
-                    onBack: { currentStep = 2 },
+                    onBack: { currentStep = 3 },
                     onReset: {
                         currentStep = 1
                         problemStatement = ""

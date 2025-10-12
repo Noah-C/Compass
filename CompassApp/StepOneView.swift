@@ -18,7 +18,7 @@ struct StepOneView: View {
                 Spacer()
                     .frame(height: geometry.size.height * 0.15)
                 
-                TextField("What has he/she done or said?", text: $problemStatement)
+                TextField("Type here... What did they do or say?", text: $problemStatement)
                     .textFieldStyle(CustomTextFieldStyle())
                     .padding(.horizontal, 20)
                 
