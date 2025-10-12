@@ -16,7 +16,7 @@ The initial idea was simple. Jerry and I realized we too often assumed things ab
 
 One day I drew a grid to visualize our emotional responses:
 
-![Prototype 1](./Prototype%201.jpg)
+![Prototype 1](./Prototype%201.png)
 
 For any given event, each person places a pin somewhere in the grid to show two things:
 - **What they think the actor's intention was**: unintentional, intentional, or ill-intentional
