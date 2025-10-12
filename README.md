@@ -36,8 +36,6 @@ However, there are also things that go unnoticed by both parties but have indeed
 
 **[Launch Compass Web App →](https://noah-c.github.io/Compass/compass_matrix.html)**
 
-<sub>⚙️ To enable this link: Go to [Settings > Pages](https://github.com/Noah-C/Compass/settings/pages), select **main** branch as source, and save.</sub>
-
 The web version offers several features:
 - **Simple three-step process**: Articulate the problem first, then place pins, and finally view the combined result.
 - **Asynchronous communication**: After one person drops their pin, they can send the "case" to the other party and request their pin placement—enabling communication without needing to be together.
