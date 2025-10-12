@@ -34,7 +34,7 @@ However, there are also things that go unnoticed by both parties but have indeed
 
 ## Web Version
 
-**[Launch Compass Web App →](https://noah-c.github.io/Compass/compass_matrix.html)**
+**[🔗 Launch Compass Web App](https://noah-c.github.io/Compass/compass_matrix.html)** *(right-click to open in new tab)*
 
 The web version offers several features:
 - **Simple three-step process**: Articulate the problem first, then place pins, and finally view the combined result.
